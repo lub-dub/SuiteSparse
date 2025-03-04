@@ -584,6 +584,45 @@ else ( )
 endif ( )
 
 #-------------------------------------------------------------------------------
+# compiler options
+#-------------------------------------------------------------------------------
+
+# check which compiler is being used.  If you need to make
+# compiler-specific modifications, here is the place to do it.
+if ( "${CMAKE_C_COMPILER_ID}" STREQUAL "GNU")
+    set ( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -O3 -mavxifma" )
+elseif ( "${CMAKE_C_COMPILER_ID}" STREQUAL "Intel" )
+    # note that -g can be used, for VTune.  Comment out the following line
+    # to compile without -g.
+    # set ( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -g " )
+    # check all warnings:
+#   set ( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -w3 " )
+    #if ( CMAKE_C_COMPILER_VERSION VERSION_LESS 18.0 )
+    #    message ( FATAL_ERROR "icc version must be at least 18.0" )
+    #endif ( )
+elseif ( "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang" AND NOT "${CMAKE_C_COMPILER_FRONTEND_VARIANT}" STREQUAL "MSVC" )
+    # options for clang
+    set ( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -O3 -march=x86-64-v3" )
+    #if ( CMAKE_C_COMPILER_VERSION VERSION_LESS 3.3 )
+    #    message ( FATAL_ERROR "clang version must be at least 3.3" )
+    #endif ( )
+elseif ( "${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC" OR "${CMAKE_C_COMPILER_FRONTEND_VARIANT}" STREQUAL "MSVC" )
+    # options for MicroSoft Visual Studio
+elseif ( "${CMAKE_C_COMPILER_ID}" STREQUAL "PGI" )
+    # options for PGI pgcc compiler
+    set ( CMAKE_C_FLAGS    "${CMAKE_C_FLAGS} -acc -Minfo=accel -Mcuda -Mnoopenmp -noswitcherror -fPIC " )
+endif ( )
+
+if ( ${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    set ( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} ${CMAKE_C_FLAGS_DEBUG}" )
+else ( )
+    set ( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} ${CMAKE_C_FLAGS_RELEASE}" )
+endif ( )
+
+
+
+
+#-------------------------------------------------------------------------------
 # report status
 #-------------------------------------------------------------------------------
 
