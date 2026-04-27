@@ -268,33 +268,33 @@ int KLU_refactor        /* returns TRUE if successful, FALSE otherwise */
                     Udiag [k+k1] = ukk ;
                     /* gather and divide by pivot to get kth column of L */
                     GET_POINTER (LU, Lip, Llen, Li, Lx, k, llen) ;
-		    #ifdef COMPLEX
-                    double r, den;
-                    double br, bi;
-		    int gt = 0;
-		    br = ukk.Real;
-		    bi = ukk.Imag;
+                    #ifdef COMPLEX
+                    double r, den ;
+                    double br, bi ;
+                    int gt = 0 ;
+                    br = ukk.Real ;
+                    bi = ukk.Imag ;
                     if (SCALAR_ABS (br) >= SCALAR_ABS (bi)){
-		    	r = bi / br;
-			den = br + r * bi;
-			gt = 1;
-		    } else {
-		    	r = br / bi;
-			den = r * br + bi;
-		    }
-		    #endif
-		    for (p = 0 ; p < llen ; p++)
+                        r = bi / br ;
+                        den = br + r * bi ;
+                        gt = 1 ;
+                    } else {
+                        r = br / bi ;
+                        den = r * br + bi ;
+                    }
+                    #endif
+                    for (p = 0 ; p < llen ; p++)
                     {
                         i = Li [p] ;
-			#ifdef COMPLEX
-			if (gt) {
-                        	DIV_GT (Lx [p], X [i], r, den) ;
-			} else{
-                        	DIV_LT (Lx [p], X [i], r, den) ;
-			}
-			#else
-			DIV (Lx [p], X [i], ukk) ;
-			#endif
+                        #ifdef COMPLEX
+                        if (gt) {
+                          DIV_GT (Lx [p], X [i], r, den) ;
+                        } else{
+                          DIV_LT (Lx [p], X [i], r, den) ;
+                        }
+                        #else
+                        DIV (Lx [p], X [i], ukk) ;
+                        #endif
                         CLEAR (X [i]) ;
                     }
 
@@ -435,33 +435,33 @@ int KLU_refactor        /* returns TRUE if successful, FALSE otherwise */
                     Udiag [k+k1] = ukk ;
                     /* gather and divide by pivot to get kth column of L */
                     GET_POINTER (LU, Lip, Llen, Li, Lx, k, llen) ;
-		    #ifdef COMPLEX
-                    double r, den;
-                    double br, bi;
-		    int gt = 0;
-		    br = ukk.Real;
-		    bi = ukk.Imag;
-                    if (SCALAR_ABS (br) >= SCALAR_ABS (bi)){
-		    	r = bi / br;
-			den = br + r * bi;
-			gt = 1;
-		    } else {
-		    	r = br / bi;
-			den = r * br + bi;
-		    }
-		    #endif
-		    for (p = 0 ; p < llen ; p++)
+                    #ifdef COMPLEX
+                    double r, den ;
+                    double br, bi ;
+                    int gt = 0 ;
+                    br = ukk.Real ;
+                    bi = ukk.Imag ;
+                    if (SCALAR_ABS (br) >= SCALAR_ABS (bi)) {
+                        r = bi / br ;
+                        den = br + r * bi ;
+                        gt = 1 ;
+                    } else {
+                            r = br / bi ;
+                            den = r * br + bi ;
+                    }
+                    #endif
+                    for (p = 0 ; p < llen ; p++)
                     {
                         i = Li [p] ;
-			#ifdef COMPLEX
-			if (gt) {
-                        	DIV_GT (Lx [p], X [i], r, den) ;
-			} else{
-                        	DIV_LT (Lx [p], X [i], r, den) ;
-			}
-			#else
+                    #ifdef COMPLEX
+                    if (gt) {
+                          DIV_GT (Lx [p], X [i], r, den) ;
+                    } else{
+                          DIV_LT (Lx [p], X [i], r, den) ;
+                    }
+                    #else
                         DIV (Lx [p], X [i], ukk) ;
-			#endif
+                    #endif
                         CLEAR (X [i]) ;
                     }
                 }

@@ -335,8 +335,6 @@ typedef double Unit ;
 
 */
 
-
-
 typedef struct
 {
     double component [2] ;      /* real and imaginary parts */
@@ -357,8 +355,6 @@ typedef pDouble_Complex Unit ;
 #define Entry pDouble_Complex
 #define Real tstruct.component [0]
 #define Imag tstruct.component [1]
-
-
 
 /* for flop counts */
 #define MULTSUB_FLOPS   8.      /* c -= a*b */
@@ -518,13 +514,13 @@ typedef pDouble_Complex Unit ;
 #define MULT_SUB(c,a,b) \
 { \
     ASSERT (&(c) != &(a) && &(c) != &(b)) ; \
-    v2d tmp = a.vec * b.vec; \
-    v2d shuffle = __builtin_shufflevector(a.vec,a.vec,1,0); \
-    v2d tmp1 = shuffle * b.vec; \
-    v2d mul_vec = {-1,1}; \
-    v2d shuffle1 = __builtin_shufflevector(tmp,tmp1,0,2); \
-    v2d shuffle2= __builtin_shufflevector(tmp,tmp1,1,3); \
-    c.vec -= shuffle1 + (shuffle2 * mul_vec); \
+    v2d tmp = a.vec * b.vec ; \
+    v2d shuffle = __builtin_shufflevector(a.vec,a.vec,1,0) ; \
+    v2d tmp1 = shuffle * b.vec ; \
+    v2d mul_vec = {-1,1} ; \
+    v2d shuffle1 = __builtin_shufflevector(tmp,tmp1,0,2) ; \
+    v2d shuffle2= __builtin_shufflevector(tmp,tmp1,1,3) ; \
+    c.vec -= shuffle1 + (shuffle2 * mul_vec) ; \
 }
 
 /* -------------------------------------------------------------------------- */
@@ -577,9 +573,9 @@ typedef pDouble_Complex Unit ;
 { \
     double ar = (a).Real ; \
     double ai = (a).Imag ; \
-    v2d shuffle = __builtin_shufflevector(a.vec,a.vec,1,0); \
-    v2d mul_vec = {-1,1}; \
-    v2d inverse = a.vec * mul_vec; \
+    v2d shuffle = __builtin_shufflevector(a.vec,a.vec,1,0) ; \
+    v2d mul_vec = {-1,1} ; \
+    v2d inverse = a.vec * mul_vec ; \
     c.vec = ((shuffle * r) + inverse) / den ;\
 }
 
